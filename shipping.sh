@@ -42,6 +42,7 @@ else
 fi
 curl -L -o /tmp/shipping.zip https://roboshop-artifacts.s3.amazonaws.com/shipping-v3.zip  &>>$LOG_FILE
  validate $? "downloaded shipping.zip in tmp "
+ rm -rf /app/*
  cd /app &>>$LOG_FILE
  validate $? "cd into app"
  unzip -o /tmp/shipping.zip &>>$LOG_FILE
