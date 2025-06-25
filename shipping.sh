@@ -46,9 +46,9 @@ curl -o /tmp/shipping.zip https://roboshop-builds.s3.amazonaws.com/shipping.zip 
  validate $? "cd into app"
  unzip /tmp/shipping.zip &>>$LOG_FILE
  validate $? "unzip into app directory"
- mvn clean package
+ mvn clean package &>>$LOG_FILE
  validate $? "installing dependencies"
- mv target/shipping-1.0.jar shipping.jar
+ mv target/shipping-1.0.jar shipping.jar &>>$LOG_FILE
  validate $? "moving shipping.jar"
  cp /home/ec2-user/roboshop-shell-2025/shipping.service   /etc/systemd/system/shipping.service &>>$LOG_FILE
  validate $? "copying shipping.service"
@@ -58,14 +58,14 @@ systemctl enable shipping &>>$LOG_FILE
 validate $? "enable service"
 systemctl start shipping &>>$LOG_FILE
 validate $? "start the service"
-dnf install mysql -y
+dnf install mysql -y &>>$LOG_FILE
 validate $? "installing mysql-clicent"
-mysql -h mysql.joindevops.store -uroot  < /app/db/schema.sql
+mysql -h mysql.joindevops.store -uroot  < /app/db/schema.sql &>>$LOG_FILE
 validate $? "loading schema.sql"
-mysql -h mysql.joindevops.store -uroot  < /app/db/app-user.sql 
+mysql -h mysql.joindevops.store -uroot  < /app/db/app-user.sql &>>$LOG_FILE 
 validate $? "loading app-user.sql"
-mysql -h mysql.joindevops.store -uroot  < /app/db/master-data.sql
+mysql -h mysql.joindevops.store -uroot  < /app/db/master-data.sql &>>$LOG_FILE
 validate $? "loading master-data.sql"
-systemctl restart shipping
+systemctl restart shipping &>>$LOG_FILE
 validate $? "restarting shipping"
 
