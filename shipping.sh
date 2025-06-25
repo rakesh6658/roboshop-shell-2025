@@ -40,7 +40,7 @@ if [ ! -d "$DIR" ]; then
 else
     echo "$DIR exists."
 fi
-curl -L -o /tmp/shipping.zip https://roboshop-builds.s3.amazonaws.com/shipping.zip &>>$LOG_FILE
+curl -L -o /tmp/shipping.zip https://roboshop-artifacts.s3.amazonaws.com/shipping-v3.zip  &>>$LOG_FILE
  validate $? "downloaded shipping.zip in tmp "
  cd /app &>>$LOG_FILE
  validate $? "cd into app"
@@ -48,7 +48,7 @@ curl -L -o /tmp/shipping.zip https://roboshop-builds.s3.amazonaws.com/shipping.z
  validate $? "unzip into app directory"
  mvn clean package &>>$LOG_FILE
  validate $? "installing dependencies"
- mv target/shipping-1.0.jar shipping.jar &>>$LOG_FILE
+ mv target/shipping-1.0.jar shipping.jar  &>>$LOG_FILE
  validate $? "moving shipping.jar"
  cp /home/ec2-user/roboshop-shell-2025/shipping.service   /etc/systemd/system/shipping.service &>>$LOG_FILE
  validate $? "copying shipping.service"
@@ -58,16 +58,14 @@ systemctl enable shipping &>>$LOG_FILE
 validate $? "enable service"
 systemctl start shipping &>>$LOG_FILE
 validate $? "start the service"
-dnf install mysql -y &>>$LOG_FILE
+dnf install mysql -y  &>>$LOG_FILE
 validate $? "installing mysql-clicent"
- mysql -h mysql.joindevops.store -uroot  < /app/db/schema.sql &>>$LOG_FILE
+ mysql -h mysql.joindevops.store -uroot -pRoboShop@1 < /app/db/schema.sql &>>$LOG_FILE
  validate $? "loading schema.sql"
- mysql -h mysql.joindevops.store -uroot  < /app/db/app-user.sql &>>$LOG_FILE 
+ mysql -h mysql.joindevops.store -uroot -pRoboShop@1 < /app/db/app-user.sql  &>>$LOG_FILE 
 validate $? "loading app-user.sql"
- mysql -h mysql.joindevops.store -uroot  < /app/db/master-data.sql &>>$LOG_FILE
+ mysql -h mysql.joindevops.store -uroot -pRoboShop@1 < /app/db/master-data.sql &>>$LOG_FILE
  validate $? "loading master-data.sql"
-mysql -h mysql.joindevops.store -uroot -pRoboShop@1 < /app/schema/shipping.sql 
-validate $? "loading shipping.sql"
 systemctl restart shipping &>>$LOG_FILE
 validate $? "restarting shipping"
 
