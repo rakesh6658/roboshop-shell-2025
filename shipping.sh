@@ -40,7 +40,7 @@ if [ ! -d "$DIR" ]; then
 else
     echo "$DIR exists."
 fi
-curl -o /tmp/shipping.zip https://roboshop-builds.s3.amazonaws.com/shipping.zip &>>$LOG_FILE
+curl -L -o /tmp/shipping.zip https://roboshop-builds.s3.amazonaws.com/shipping.zip &>>$LOG_FILE
  validate $? "downloaded shipping.zip in tmp "
  cd /app &>>$LOG_FILE
  validate $? "cd into app"
