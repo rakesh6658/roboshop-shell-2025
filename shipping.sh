@@ -60,11 +60,11 @@ systemctl start shipping &>>$LOG_FILE
 validate $? "start the service"
 dnf install mysql -y
 validate $? "installing mysql-clicent"
-mysql -h mysql.joindevops.store -uroot -pRoboShop@1 < /app/db/schema.sql
+mysql -h mysql.joindevops.store -uroot  < /app/db/schema.sql
 validate $? "loading schema.sql"
-mysql -h mysql.joindevops.store -uroot -pRoboShop@1 < /app/db/app-user.sql 
+mysql -h mysql.joindevops.store -uroot  < /app/db/app-user.sql 
 validate $? "loading app-user.sql"
-mysql -h mysql.joindevops.store -uroot -pRoboShop@1 < /app/db/master-data.sql
+mysql -h mysql.joindevops.store -uroot  < /app/db/master-data.sql
 validate $? "loading master-data.sql"
 systemctl restart shipping
 validate $? "restarting shipping"
