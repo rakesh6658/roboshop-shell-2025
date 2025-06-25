@@ -66,7 +66,7 @@ validate $? "installing mysql-clicent"
 # validate $? "loading app-user.sql"
 # mysql -h mysql.joindevops.store -uroot  < /app/db/master-data.sql &>>$LOG_FILE
 # validate $? "loading master-data.sql"
-mysql -h <MYSQL-SERVER-IPADDRESS> -uroot -pRoboShop@1 < /app/schema/shipping.sql 
+mysql -h mysql.joindevops.store -uroot -pRoboShop@1 < /app/schema/shipping.sql 
 validate $? "loading shipping.sql"
 systemctl restart shipping &>>$LOG_FILE
 validate $? "restarting shipping"
