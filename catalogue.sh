@@ -46,7 +46,7 @@ else
 fi
 curl -o /tmp/catalogue.zip https://roboshop-builds.s3.amazonaws.com/catalogue.zip &>>$LOG_FILE
  validate $? "downloaded catalogue.zip in tmp "
- cd /app &>>$LOG_FILE
+ cd app &>>$LOG_FILE
  validate $? "cd into app"
  unzip /tmp/catalogue.zip &>>$LOG_FILE
  validate $? "unzip into app directory"
