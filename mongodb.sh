@@ -21,7 +21,7 @@ then
     echo -e "$2.... $G success $N"
     fi
  }
- cp /home/ec2-user/mongo.repo /etc/yum.repos.d/mongo.repo &>>$LOG_FILE
+ cp /home/ec2-user/roboshop-shell-2025/mongo.repo /etc/yum.repos.d/mongo.repo &>>$LOG_FILE
  validate $? "copying of mongo.repo"
 
  dnf install mongodb-org -y &>>$LOG_FILE

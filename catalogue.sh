@@ -21,16 +21,16 @@ validate(){
     echo -e "$2.... $G success $N"
     fi
  }
- dnf module disable nodejs -y 
+ dnf module disable nodejs -y &>>$LOG_FILE
  validate $? "disable nodejs"
-dnf module enable nodejs:20 -y
+dnf module enable nodejs:20 -y &>>$LOG_FILE
 validate $? "enable nodejs"
-dnf install nodejs -y 
+dnf install nodejs -y  &>>$LOG_FILE
 validate $? "installing nodejs"
-id roboshop
+id roboshop &>>$LOG_FILE
 if [ $? -ne 0 ]
 then 
-useradd roboshop 
+useradd roboshop &>>$LOG_FILE
 validate $? "adding user roboshop"
 else 
 echo "user roboshop exists"
@@ -39,31 +39,31 @@ DIR="/home/ec2-user/app"
 
 if [ ! -d "$DIR" ]; then
     echo "Directory does not exist. Creating..."
-    mkdir -p "$DIR"
+    mkdir -p "$DIR" &>>$LOG_FILE
     validate $? "created app directory"
 else
     echo "$DIR exists."
 fi
-curl -o /tmp/catalogue.zip https://roboshop-builds.s3.amazonaws.com/catalogue.zip
+curl -o /tmp/catalogue.zip https://roboshop-builds.s3.amazonaws.com/catalogue.zip &>>$LOG_FILE
  validate $? "downloaded catalogue.zip in tmp "
- cd /app 
+ cd /app &>>$LOG_FILE
  validate $? "cd into app"
- unzip /tmp/catalogue.zip 
+ unzip /tmp/catalogue.zip &>>$LOG_FILE
  validate $? "unzip into app directory"
- npm install 
+ npm install &>>$LOG_FILE
  validate $? "installing dependencies"
- cp /home/ec2-user/catalogue.service   /etc/systemd/system/catalogue.service
+ cp /home/ec2-user/roboshop-shell-2025/catalogue.service   /etc/systemd/system/catalogue.service &>>$LOG_FILE
  validate $? "copying catalogue.service"
- systemctl daemon-reload
+ systemctl daemon-reload &>>$LOG_FILE
 validate $? "load the service"
-systemctl enable catalogue
+systemctl enable catalogue &>>$LOG_FILE
 validate $? "enable service"
-systemctl start catalogue
+systemctl start catalogue &>>$LOG_FILE
 validate $? "start the service"
-cp /home/ec2-user/mongo.repo  /etc/yum.repos.d/mongo.repo
+cp /home/ec2-user/roboshop-shell-2025/mongo.repo  /etc/yum.repos.d/mongo.repo &>>$LOG_FILE
 validate $? "copying mongo.repo"
-dnf install -y mongodb-mongosh
+dnf install -y mongodb-mongosh &>>$LOG_FILE
 validate $? "installing mongodb-mongosh"
-mongosh --host  </app/schema/catalogue.js
+mongosh --host mongodb.joindevops.store </app/schema/catalogue.js &>>$LOG_FILE
 validate $? "loading schema"
 
