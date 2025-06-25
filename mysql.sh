@@ -21,11 +21,7 @@ then
     echo -e "$2.... $G success $N"
     fi
  }
- yum module disable mysql -y 
- validate $? "disable mysql"
- cp /home/ec2-user/roboshop-shell-2025/mysql.repo /etc/yum.repos.d/mysql.repo
- validate $? "copying mysql.repo"
- yum install mysql-community-server -y &>>$LOG_FILE
+ dnf install mysql-server -y &>>$LOG_FILE
 validate $? "installing mysql-server"
 systemctl enable mysqld &>>$LOG_FILE
 validate $? "enable mysql"
