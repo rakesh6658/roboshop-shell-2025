@@ -44,7 +44,7 @@ curl -L -o /tmp/shipping.zip https://roboshop-artifacts.s3.amazonaws.com/shippin
  validate $? "downloaded shipping.zip in tmp "
  cd /app &>>$LOG_FILE
  validate $? "cd into app"
- unzip /tmp/shipping.zip &>>$LOG_FILE
+ unzip -o /tmp/shipping.zip &>>$LOG_FILE
  validate $? "unzip into app directory"
  mvn clean package &>>$LOG_FILE
  validate $? "installing dependencies"
