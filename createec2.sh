@@ -19,7 +19,7 @@ private_ip=$(aws ec2 run-instances \
   --instance-type $instance_type \
   --security-group-ids $security_group_id \
    --tag-specifications "ResourceType=instance,Tags=[{Key=Name,Value=$i}]" \
-| jq -r '.Instances[].PrivateIpAddress')
+| jq  '.Instances[].PrivateIpAddress')
 aws route53 change-resource-record-sets --hosted-zone-id $hosted_zone_id --change-batch "{
 
   '"Changes": [
