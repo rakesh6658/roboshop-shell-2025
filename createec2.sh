@@ -4,7 +4,7 @@ echo "all instances ${instances[@]}"
 image_id="ami-09c813fb71547fc4f"
 
 security_group_id="sg-04b86a12980ec1b5f"
-for i in ${instances[$@]}
+for i in "${instances[$@]}"
 do
 if [[ "$i" == "mongodb" || "$i" == "mysql" ]] 
 then
