@@ -1,6 +1,6 @@
 #!/bin/bash
 
-instances=("mongodb" "catalogue" "redis" "user" "cart" "mysql" "shipping" "rabbitmq" "payment" "web")
+instances=$@
 
 echo "All instances: ${instances[@]}"
 
