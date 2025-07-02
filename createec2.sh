@@ -9,7 +9,7 @@ hosted_zone_id="Z08250303NQOMHGBRQZIZ"
 domain_name="joindevops.store"
 security_group_id="sg-04b86a12980ec1b5f"
 
-for i in "${instances[@]}"
+for i in "$@"
 do
   if [[ "$i" == "mongodb" || "$i" == "mysql" ]]; then
     instance_type="t3.medium"
